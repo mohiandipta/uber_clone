@@ -4,12 +4,13 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
         children: [
           SizedBox(
             width: 560,
-            height: 60,
+            height: 30,
           ),
           Image(
             alignment: Alignment.center,
@@ -26,7 +27,7 @@ class LoginScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           SizedBox(
-            height: 70,
+            height: 30,
           ),
 
           Padding(
@@ -52,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 20,
                 ),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
@@ -72,6 +73,19 @@ class LoginScreen extends StatelessWidget {
                         borderSide: BorderSide(color: Colors.blue)),
                   ),
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () => {},
+                  child: Text(
+                    'Log in',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                )
               ],
             ),
           )
