@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:uber_clone/AllScreens/registrationScreen.dart';
+import 'package:uber_clone/AllScreens/loginScreen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String idScreen = "login";
+class RegistrationScreen extends StatelessWidget {
+  static const String idScreen = "register";
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
               //   height: 10,
               // ),
               Text(
-                'Sign in as a rider',
+                'Register in as a rider',
                 style: TextStyle(fontSize: 24, fontFamily: "Brand Bold"),
                 textAlign: TextAlign.center,
               ),
@@ -40,11 +40,10 @@ class LoginScreen extends StatelessWidget {
                 padding: EdgeInsets.only(left: 50, right: 50),
                 child: Column(
                   children: [
-                    // email field
                     TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-                        hintText: '  Ente your email',
+                        hintText: '  Name',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide(color: Colors.yellow)),
@@ -60,13 +59,57 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
+                    ),
+                    // email field
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        hintText: '  email',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.yellow)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.blue)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.blue)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // phone field
+                    TextFormField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        hintText: '  Phone',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.yellow)),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.blue)),
+                        errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide(color: Colors.blue)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
                     ),
                     // password field
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: '  Ente your password',
+                        hintText: '  password',
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                             borderSide: BorderSide(color: Colors.yellow)),
@@ -94,9 +137,9 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        onPressed: () => {print('logged in button clicked')},
+                        onPressed: () => {print('Signed up button clicked')},
                         child: Text(
-                          'Log in',
+                          'Sign up',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -111,11 +154,11 @@ class LoginScreen extends StatelessWidget {
                           primary: Colors.amber[500],
                         ),
                         onPressed: () => {
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              RegistrationScreen.idScreen, (route) => false)
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, LoginScreen.idScreen, (route) => false)
                         },
                         child: Text(
-                          'All ready have an account? Log in.',
+                          'Do not have an account? Register here.',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
