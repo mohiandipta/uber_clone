@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone/AllScreens/registrationScreen.dart';
+import 'package:uber_clone/AllWidgets/progressDialog.dart';
 
 import '../main.dart';
 import 'mainScreen.dart';
@@ -160,12 +161,23 @@ class LoginScreen extends StatelessWidget {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   loginAndAuthenticateUser(BuildContext context) async {
+    // adding dialog box
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ProgressDialog(
+            message: 'Authenticating, Please wait',
+          );
+        });
+    // login authenticate
     final User? firebaseUser = (await _firebaseAuth
             .signInWithEmailAndPassword(
                 email: emailTextEditingController.text,
                 password: passwordTextEditingController.text)
             .catchError(
       (errMsg) {
+        Navigator.pop(context);
         displayToastMessage("Error: " + errMsg.toString(), context);
       },
     ))
@@ -179,6 +191,7 @@ class LoginScreen extends StatelessWidget {
                 context, MainScreen.idScreen, (route) => false);
             displayToastMessage("Logged in", context);
           } else {
+            Navigator.pop(context);
             _firebaseAuth.signOut();
             displayToastMessage(
                 "Account does not exists, Create new account please", context);
@@ -187,6 +200,7 @@ class LoginScreen extends StatelessWidget {
       );
     } else {
       print('creating user facing error');
+      Navigator.pop(context);
       displayToastMessage("Error occurd, can not be logged in", context);
     }
   }
