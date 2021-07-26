@@ -1,8 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone/AllScreens/registrationScreen.dart';
 
+import '../main.dart';
+import 'mainScreen.dart';
+
 class LoginScreen extends StatelessWidget {
   static const String idScreen = "login";
+
+  final TextEditingController emailTextEditingController =
+      TextEditingController();
+  final TextEditingController passwordTextEditingController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: 30,
+                height: 50,
               ),
 
               Padding(
@@ -42,6 +52,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     // email field
                     TextFormField(
+                      controller: emailTextEditingController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         hintText: '  Ente your email',
@@ -64,6 +75,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     // password field
                     TextFormField(
+                      controller: passwordTextEditingController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         hintText: '  Ente your password',
@@ -82,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 60,
                     ),
                     // login button
                     Container(
@@ -94,7 +106,23 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        onPressed: () => {print('logged in button clicked')},
+                        onPressed: () => {
+                          if (!emailTextEditingController.text.contains("@"))
+                            {
+                              displayToastMessage(
+                                  "Enter valid email address", context)
+                            }
+                          else if (passwordTextEditingController.text.length <
+                              6)
+                            {
+                              displayToastMessage(
+                                  "Password can not be empty", context)
+                            }
+                          else
+                            {
+                              loginAndAuthenticateUser(context),
+                            }
+                        },
                         child: Text(
                           'Log in',
                           style: TextStyle(
@@ -115,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                               RegistrationScreen.idScreen, (route) => false)
                         },
                         child: Text(
-                          'All ready have an account? Log in.',
+                          'Do not have an account? Register here.',
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -128,5 +156,38 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  loginAndAuthenticateUser(BuildContext context) async {
+    final User? firebaseUser = (await _firebaseAuth
+            .signInWithEmailAndPassword(
+                email: emailTextEditingController.text,
+                password: passwordTextEditingController.text)
+            .catchError(
+      (errMsg) {
+        displayToastMessage("Error: " + errMsg.toString(), context);
+      },
+    ))
+        .user;
+
+    if (firebaseUser != null) {
+      usersRef.child(firebaseUser.uid).once().then(
+        (DataSnapshot snap) {
+          if (snap.value != null) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, MainScreen.idScreen, (route) => false);
+            displayToastMessage("Logged in", context);
+          } else {
+            _firebaseAuth.signOut();
+            displayToastMessage(
+                "Account does not exists, Create new account please", context);
+          }
+        },
+      );
+    } else {
+      print('creating user facing error');
+      displayToastMessage("Error occurd, can not be logged in", context);
+    }
   }
 }
