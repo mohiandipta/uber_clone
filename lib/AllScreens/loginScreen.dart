@@ -102,7 +102,7 @@ class LoginScreen extends StatelessWidget {
                       width: 130,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.amber[500],
+                          primary: Colors.black87,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
@@ -137,7 +137,7 @@ class LoginScreen extends StatelessWidget {
                     Container(
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.amber[500],
+                          primary: Colors.black87,
                         ),
                         onPressed: () => {
                           Navigator.pushNamedAndRemoveUntil(context,
