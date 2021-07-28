@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Uber_Clone",
-      initialRoute: MainScreen.idScreen,
+      initialRoute: LoginScreen.idScreen,
       routes: {
         RegistrationScreen.idScreen: (context) => RegistrationScreen(),
         LoginScreen.idScreen: (context) => LoginScreen(),
