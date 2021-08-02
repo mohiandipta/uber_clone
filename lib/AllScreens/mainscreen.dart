@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:uber_clone/AllScreens/loginScreen.dart';
 
 class MainScreen extends StatefulWidget {
   static const String idScreen = "mainScreen";
@@ -35,6 +36,24 @@ class _MainScreenState extends State<MainScreen> {
             initialCameraPosition: CameraPosition(
               target: _center,
               zoom: 11.0,
+            ),
+          ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30, left: 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black87,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: () => {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, LoginScreen.idScreen, (route) => false)
+                },
+                child: Text("Log Out"),
+              ),
             ),
           ),
           Positioned(
